@@ -1,0 +1,46 @@
+1. MATCH (n:Movie) RETURN n
+
+2. MATCH (hw:Person {name: 'Hugo Weaving'})-[:ACTED_IN]->(movie:Movie) RETURN movie
+
+3. MATCH (p:Person)-[:DIRECTED]->(movie:Movie)
+   WHERE EXISTS
+   {
+   	MATCH(hw:Person {name: 'Hugo Weaving'})-[:ACTED_IN]->(movie:Movie)
+   } 
+   RETURN DISTINCT p
+lub
+   MATCH(:Person {name: 'Hugo Weaving'})-[:ACTED_IN]->(movie)<-[:DIRECTED]-(director)      
+   return DISTINCT director
+
+4. MATCH (p:Person)-[:ACTED_IN]->(movie:Movie)
+   WHERE EXISTS
+   {
+   	MATCH(hw:Person {name: 'Hugo Weaving'})-[:ACTED_IN]->(movie:Movie)
+   } 
+   RETURN DISTINCT p
+
+5. MATCH (p:Person)-[:ACTED_IN]->(movie:Movie)
+   WHERE EXISTS
+   {
+   	MATCH(p:Person)-[:ACTED_IN]->(:Movie {title: 'The Matrix'})
+   } 
+   RETURN DISTINCT movie
+
+6. MATCH(p:Person)-[:ACTED_IN]->(m:Movie)
+  RETURN p.name, count(*) as numOfMOvies
+  //w tym poleceniu oczywiście nie da się wyeksportować grafu, bo nie ma takiej opcji
+
+7. MATCH (p:Person)-[:DIRECTED]->(movie:Movie)
+   WHERE EXISTS
+   {
+  	MATCH(p:Person)-[:WROTE]->(movie:Movie)
+   } 
+   RETURN  p.name, movie.title
+//w tym poleceniu również oczywiście nie da się wyeksportować grafu, bo nie ma takiej opcji
+
+8. MATCH (:Person{name: 'Hugo Weaving'})-[:ACTED_IN]->(movie:Movie)
+   WHERE EXISTS
+   {
+   	MATCH(:Person{name: 'Keanu Reeves'})-[:ACTED_IN]->(movie:Movie)
+   } 
+   RETURN movie
