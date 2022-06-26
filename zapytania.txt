@@ -44,3 +44,17 @@ lub
    	MATCH(:Person{name: 'Keanu Reeves'})-[:ACTED_IN]->(movie:Movie)
    } 
    RETURN movie
+
+9.CREATE (CapitanAmerica:Movie {title:'Capitan America - The First Avenger', released:2011, tagline:'IDK'})
+CREATE (Chris:Person {name:'Chris Evans', born:1981})
+CREATE (JoeJ:Person {name:'Joe Johnston', born:1950})
+CREATE (Samuel:Person {name:'Samuel L. Jackson', born:1948})
+CREATE (Hayley:Person {name:'Hayley Atwell', born:1982})
+CREATE
+  (Chris)-[:ACTED_IN {roles:['Capitan America']}]->(CapitanAmerica),
+  (Hugo)-[:ACTED_IN {roles:['Johann Schmidt']}]->(CapitanAmerica),
+  (Hayley)-[:ACTED_IN {roles:['Peggy Carter']}]->(CapitanAmerica),
+  (Samuel)-[:ACTED_IN {roles:['Nick Fury']}]->(CapitanAmerica),
+  (JoeJ)-[:DIRECTED]->(CapitanAmerica)
+
+MATCH (n:Movie {title: "Capitan America - The First Avenger"}) RETURN n
